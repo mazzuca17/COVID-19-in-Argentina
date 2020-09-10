@@ -11,163 +11,13 @@
 		<?php include 'components/head.php'; ?>
 	</head>
 	<body>
-		<?php include 'components/header.php'; ?>
-
-		<section class="banner-area relative">
-			<div class="container">
-				<div class="row fullscreen align-items-center justify-content-between" style="height: 735px;">
-					<div class="col-lg-12">
-						<div class="banner-content text-center">
-							<h1 class="text-white text-uppercase">COVID-19 en Argentina</h1>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-
-		<section class="feature-area">
-			<div class="container">
-				
-				<figure class="highcharts-figure">
-					<div class="row justify-content-center">
-						<h2>Casos de COVID-19 en Argentina</h2>
-					</div>
-					<div id="container"></div>
-					<p class="highcharts-description">
-						Este gráfico muestra el total de los casos y los casos que se registraron por día de 
-						COVID-19 en Argentina.
-						Para visualizar la información por día ponga el cursor sobre el punto del gráfico.
-						Los casos más recientes se muestran a la derecha del gráfico.
-					</p>
-					</figure>
-			
-			</div>
-			<div class="container">
-				
-				<figure class="highcharts-figure">
-					<div class="row justify-content-center">
-						<h2>Fallecimientos por día por COVID-19 en Argentina</h2>
-					</div>
-
-					<div id="graphic2"></div>
-					<p class="highcharts-description">
-						Este gráfico muestra los datos sobre los nuevos fallecimientos por 
-						COVID-19 que se produjeron en Argentina por día.
-						Para visualizar la información por día ponga el cursor sobre el punto del gráfico.
-						Los casos más recientes se muestran a la derecha del gráfico.
-						
-					</p>
-					</figure>
-			
-			</div>
-			<div class="container">
-				
-				<figure class="highcharts-figure">
-					<div class="row justify-content-center">
-						<h2>Recuperados por día por COVID-19 en Argentina</h2>
-					</div>
-					<div id="graphic3"></div>
-					<p class="highcharts-description">
-						Este gráfico muestra los datos sobre los nuevos recuperados 
-						por COVID-19 que se produjeron en Argentina por día.
-						Para visualizar la información por día ponga el cursor sobre el punto del gráfico.
-						Los casos más recientes se muestran a la derecha del gráfico.
-						
-					</p>
-					</figure>
-			
-			</div>
-		</section>
-
-		<section class="service-area">
-			<div class="container-fluid">
-				<div class="row justify-content-start align-items-center">
-					<div class="col-lg-6 service-left">
-						<div class="row justify-content-center">
-							<div class="col-lg-8 col-sm-8 service-content ">
-								<h2 class="text-white">
-								<span>Coronavirus</span><br>
-								en Argentina.
-
-							    </h2>
-								<p>
-									A continuación, se disponen todos los datos totales importantes sobre el 
-									avance del Coronavirus
-									COVID-19 en el país.
-								</p>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-6 service-right">
-						<div class="row">
-							<div class="col-lg-6 col-md-6 col-sm-6 single-services">
-								<h2>
-								<?php 
-								$confirmados = $data[$j-1]['Cases'];
-								echo $confirmados?>
-								</h2>
-								<p>
-									Casos confirmados
-								</p>
-							</div>
-							<div class="col-lg-6 col-md-6 col-sm-6 single-services">
-								<h2>
-								<?php 
-									echo $total;
-								?>
-								</h2>
-								<p>
-									Muertes
-								</p>
-							</div>
-							<div class="col-lg-6 col-md-6 col-sm-6 single-services">
-								<h2>
-								<?php 
-									echo $recuperadosT;
-									$porciento = ($recuperadosT / ($confirmados - $total)) * 100;
-									$mostrar_porciento = round($porciento, 2);
-									echo" ("; echo $mostrar_porciento; echo" %)";
-								?>
-								</h2>
-								<p>
-									Recuperados
-								</p>
-							</div>
-							<div class="col-lg-6 col-md-6 col-sm-6 single-services">
-								<h2>
-								<?php 
-								$casosActivos = $confirmados - $recuperadosT - ($total);
-								$porciento_ca = ($casosActivos / ($confirmados - $total)) * 100;
-								$show_p_ca = round($porciento_ca, 2);
-								echo $casosActivos;
-								echo" ("; echo $show_p_ca; echo" %)";
-								?>
-								</h2>
-								<p>
-									Casos activos
-								</p>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-
-		
-
-		<section class="latest-work-area pt-100 pb-100">
-			<div class="container-fluid">
-				
-			</div>
-		</section>
-
-		
-		<?php
-		include 'components/footer.php';
-		include 'components/scripts.php';
+		<?php 
+			include 'components/header.php'; 
+			include 'code-php/show-graphics.php';
+			include 'code-php/show-resume.php';	
+			include 'components/footer.php';
+			include 'components/scripts.php';
 		?>
-		
-		
 	  <script>
 			Highcharts.chart('container', {
 		  chart: {
@@ -239,10 +89,8 @@
 			  }
 			}]
 		  }
-		});
-	
+		});	
 	  </script>
-
 	  <script>
 			Highcharts.chart('graphic2', {
 					chart: {
@@ -310,10 +158,7 @@
 				}]
 			}
 			});
-
-	
 	  </script>
-
 	  <script>
 			Highcharts.chart('graphic3', {
 				chart: {
@@ -381,8 +226,6 @@
 				}]
 			}
 			});
-
-	
 	  </script>
 	</body>
 </html>
