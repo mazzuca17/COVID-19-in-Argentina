@@ -1,172 +1,20 @@
 <?php
-		error_reporting(0);
-        file_get_contents('https://api.covid19api.com/dayone/country/argentina/status/confirmed');
-        $data = json_decode( file_get_contents('https://api.covid19api.com/dayone/country/argentina/status/confirmed'), true );
-        $i=0;
-        $a = 1;
-        $t = 0;
-        $j = count($data);
-		$limit = $j+1;
-                
-        if(!empty($data))
-        {
-          for ($i=0; $i <$j ; $i++)
-          { 
-            
-            $cases = $data[$i]['Cases'];
-            $ej = $data[$i];
+	error_reporting(0);
+	$language = 'english';
 
-            if($a>=$limit){break;}
-            else
-            {
-              if (count($ej) === 0){} 
-              else 
-              {             
-                if($data[$a]['Cases'] != $data[$i]['Cases']){
-                  
-                  $calculo= $data[$a]['Cases'] - $data[$i]['Cases'];
-                  if($calculo>0)
-                  {
-                    $nuevos_Casos[$t] = $calculo;
-                  }
-                  
-                }
-                else{
-                  $nuevos_Casos[$t]=0;
-				}
-              }
-            }          
-            $a++;
-            $t++;
-            trim($a);
-
-
-          }
-          
-        } else {
-            echo "Data not fetched.";
-		}
-		
-		//abro API con info general en el país
-		file_get_contents('http://api.coronatracker.com/v3/analytics/newcases/country?countryCode=AR&startDate=2020-03-03&endDate=2020-12-02');
-        $dates = json_decode( file_get_contents('http://api.coronatracker.com/v3/analytics/newcases/country?countryCode=AR&startDate=2020-03-03&endDate=2020-12-02'), true );
-        $i_new=0;
-        $j_new = count($dates);
-		if(!empty($dates))
-		{
-		for ($i_new=0; $i_new < $j ; $i_new++)
-		{ 
-			$cases = $dates[$i_new]['new_deaths'];   
-			$total += $dates[$i_new]['new_deaths']; 
-			$recuperadosT += $dates[$i_new]['new_recovered']; 
-
-		}
-		
-		}
-		else {
-			echo "Data not fetched.";
-		}    
-		  
-      
-
-       
-        
-       
-
-        
+	include '../code-php/extraer-casos.php';
+	include '../code-php/extraer-recuperados.php';
 ?>
 
 <!DOCTYPE html>
-<html lang="in" class="no-js">
-<head>
-	<!-- Mobile Specific Meta -->
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<!-- Favicon-->
-	<link rel="shortcut icon" href="img/fav.png">
-	<!-- Author Meta -->
-	<meta name="author" content="Colorlib">
-	<!-- Meta Description -->
-	<meta name="description" content="">
-	<!-- Meta Keyword -->
-	<meta name="keywords" content="">
-	<!-- meta character set -->
-	<meta charset="UTF-8">
-	<!-- Site Title -->
-	<title>COVID-19 in Argentina</title>
-
-	<link href="https://fonts.googleapis.com/css?family=Poppins:100,400,300,500,600,700" rel="stylesheet">
-		<!--
-		CSS
-		============================================= -->
-		<link rel="stylesheet" href="../css/linearicons.css">
-		<link rel="stylesheet" href="../css/owl.carousel.css">
-		<link rel="stylesheet" href="../css/font-awesome.min.css">
-		<link rel="stylesheet" href="../css/nice-select.css">
-		<link rel="stylesheet" href="../css/magnific-popup.css">
-		<link rel="stylesheet" href="../css/bootstrap.css">
-		<link rel="stylesheet" href="../css/main.css">
-		<style>
-            .highcharts-figure, .highcharts-data-table table {
-            min-width: 310px; 
-            max-width: 800px;
-            margin: 1em auto;
-            }
-
-            .highcharts-data-table table {
-                font-family: Verdana, sans-serif;
-                border-collapse: collapse;
-                border: 1px solid #EBEBEB;
-                margin: 10px auto;
-                text-align: center;
-                width: 100%;
-                max-width: 500px;
-            }
-            .highcharts-data-table caption {
-            padding: 1em 0;
-            font-size: 1.2em;
-            color: #555;
-            }
-            .highcharts-data-table th {
-                font-weight: 600;
-            padding: 0.5em;
-            }
-            .highcharts-data-table td, .highcharts-data-table th, .highcharts-data-table caption {
-            padding: 0.5em;
-            }
-            .highcharts-data-table thead tr, .highcharts-data-table tr:nth-child(even) {
-            background: #f8f8f8;
-            }
-            .highcharts-data-table tr:hover {
-            background: #f1f7ff;
-            }
-
-        </style>
-        <script src="https://code.highcharts.com/highcharts.js"></script>
-        <script src="https://code.highcharts.com/modules/series-label.js"></script>
-        <script src="https://code.highcharts.com/modules/exporting.js"></script>
-        <script src="https://code.highcharts.com/modules/export-data.js"></script>
-        <script src="https://code.highcharts.com/modules/accessibility.js"></script>
-
+<html lang="en" class="no-js">
+	<head>
+		<?php include 'head.php'; ?>
 	</head>
 	<body>
 		<!-- Start Header Area -->
 		<header class="default-header">
-			<div class="container">
-				<div class="header-wrap">
-					<div class="header-top d-flex justify-content-between align-items-center">
-						<div class="logo">
-							<a href="index.html"><img src="img/logo.png" alt=""></a>
-						</div>
-						<div class="main-menubar d-flex align-items-center">
-							<nav class="hide">
-								<a href="../index.php">Inicio</a>
-								<a href="../index.php">English/Spanish</a>
-							</nav>
-							<div class="menu-bar"><span class="lnr lnr-menu"></span></div>
-						</div>
-					</div>
-				</div>
-			</div>
+			<?php include 'header.php'; ?>
 		</header>
 		<!-- End Header Area -->
 		<!-- Start Banner Area -->
@@ -285,7 +133,12 @@
 							</div>
 							<div class="col-lg-6 col-md-6 col-sm-6 single-services">
 								<h2>
-								<?php echo $recuperadosT;?>
+								<?php 
+									echo $recuperadosT;
+									$porciento = ($recuperadosT / ($confirmados - $total)) * 100;
+									$mostrar_porciento = round($porciento, 2);
+									echo" ("; echo $mostrar_porciento; echo" %)";
+								?>
 								</h2>
 								<p>
 									Recovered
@@ -294,14 +147,18 @@
 							<div class="col-lg-6 col-md-6 col-sm-6 single-services">
 								<h2>
 								<?php 
-								$casosActivos = $confirmados - $recuperadosT - $total;
+								$casosActivos = $confirmados - $recuperadosT - ($total);
+								$porciento_ca = ($casosActivos / ($confirmados - $total)) * 100;
+								$show_p_ca = round($porciento_ca, 2);
 								echo $casosActivos;
+								echo" ("; echo $show_p_ca; echo" %)";
 								?>
 								</h2>
 								<p>
-									Active cases
+									Active Cases
 								</p>
 							</div>
+							
 						</div>
 					</div>
 				</div>
@@ -320,25 +177,10 @@
 
 		
 		<!-- Start Footer Area -->
-		<footer class="footer-area pt-40 pb-40">
-			<div class="container">
-				<div class="footer-bottom d-flex justify-content-between align-items-center flex-wrap">
-					<p class="footer-text m-0 text-white">COVID 19 - Matías Mazzuca &copy;<script>document.write(new Date().getFullYear());</script></p>
-					
-				</div>
-			</div>
-		</footer>
-		
-		<!-- End Footer Area -->
-		<script src="../js/vendor/jquery-2.2.4.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
-		<script src="../js/vendor/bootstrap.min.js"></script>
-		<script src="../js/jquery.ajaxchimp.min.js"></script>
-		<script src="../js/owl.carousel.min.js"></script>
-		<script src="../js/jquery.nice-select.min.js"></script>
-		<script src="../js/jquery.magnific-popup.min.js"></script>
-		<script src="../js/jquery.flipster.min.js"></script>
-		<script src="../js/main.js"></script>
+		<?php
+		include 'footer.php';
+		include 'scripts.php';
+		?>
 
 	  <script>
 			Highcharts.chart('container', {
